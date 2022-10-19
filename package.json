@@ -1,0 +1,79 @@
+{
+  "name": "PhonologicViewer",
+  "version": "0.0.0",
+  "description": "Electron container for for phonologic-viewer",
+  "repository": "https://github.com/rcgale/phonologic",
+  "author": "Robert Gale",
+  "main": "desktop/main.js",
+  "workspaces": [
+    "desktop",
+    "web"
+  ],
+  "scripts": {
+    "build-all": "npm run build --workspaces",
+    "start": "npm run build --workspaces && electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "dependencies": {
+    "electron-config": "^2.0.0",
+    "electron-squirrel-startup": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.16.4",
+    "@electron-forge/cli": "^6.0.0-beta.66",
+    "@electron-forge/maker-deb": "^6.0.0-beta.66",
+    "@electron-forge/maker-rpm": "^6.0.0-beta.66",
+    "@electron-forge/maker-squirrel": "^6.0.0-beta.66",
+    "@electron-forge/maker-zip": "^6.0.0-beta.66",
+    "@types/node": "^18.8.5",
+    "electron": "^21.0.1",
+    "typescript": "^4.8.4"
+  },
+  "type": "module",
+  "compilerOptions": {
+    "target": "es6",
+    "strict": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "allowSyntheticDefaultImports": true
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "extraResource": [
+          "./dist",
+          "./web"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "phonologic_viewer_electron"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}

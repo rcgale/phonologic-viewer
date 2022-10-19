@@ -1,0 +1,45 @@
+{
+  "name": "PhonologicViewer",
+  "version": "0.0.0",
+  "description": "Desktop app for phonologic-viewer",
+  "repository": "https://github.com/rcgale/phonologic",
+  "author": "Robert Gale",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "config": {
+    "forge": {
+      "packagerConfig": {
+        "extraResource": [
+          "./dist"
+        ]
+      },
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "phonologic_viewer_electron"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
+  }
+}
