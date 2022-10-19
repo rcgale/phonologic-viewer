@@ -48,8 +48,6 @@
     "forge": {
       "packagerConfig": {
         "extraResource": [
-          "./dist",
-          "./web"
         ]
       },
       "makers": [

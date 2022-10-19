@@ -14,13 +14,14 @@ from phonologic import logger
 from phonologic.analysis import ComparisonFile
 
 SRC_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-STATIC_DIRECTORY = os.path.join(SRC_DIRECTORY, "web")
+STATIC_DIRECTORY = os.path.join(SRC_DIRECTORY, "../web")
 
 
 def get_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", default=5000)
+    parser.add_argument("--static", default=STATIC_DIRECTORY)
     return parser.parse_args()
 
 
@@ -62,7 +63,7 @@ def create_app(static_directory=STATIC_DIRECTORY):
     @app.route('/')
     @app.route('/<path:path>')
     def index_react(path="index.html"):
-        full_path = os.path.join(STATIC_DIRECTORY, path)
+        full_path = os.path.join(static, path)
         print(full_path)
         return send_from_directory(os.path.dirname(full_path), os.path.basename(full_path))
 
@@ -93,5 +94,6 @@ def json_handler(o):
 
 
 if __name__ == '__main__':
-    args = get_args()
-    create_app().run(**vars(args))
+    args = vars(get_args())
+    static = args.pop("static")
+    create_app(static_directory=static).run(**args)

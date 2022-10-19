@@ -10,6 +10,7 @@ import {AddressInfo} from "net";
 import App = Electron.App;
 
 const APP_PATH = path.join(__dirname, '../dist/phonologic-viewer')
+const FRONTEND_PATH = path.join(__dirname, '../web')
 const API_HOST = "127.0.0.1";
 
 class Main {
@@ -111,7 +112,7 @@ class BackendServer {
   }
 
   start(): Promise<void> {
-    let command = `${APP_PATH} --host ${this.host} --port ${this.port}`;
+    let command = `"${APP_PATH}" --host ${this.host} --port ${this.port} --static "${FRONTEND_PATH}"`;
     let serverProcess = exec(command, (err, stdout, stderr) => {
       if (err && err.code) {
         throw {
