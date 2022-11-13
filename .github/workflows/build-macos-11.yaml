@@ -1,9 +1,9 @@
 name: build-mac
-run-name: MacOS build (${{ github.actor }})
+run-name: MacOS 11 build (${{ github.actor }})
 on: [push]
 jobs:
   build-mac-version:
-    runs-on: macos-10.15
+    runs-on: macos-11
     strategy:
       matrix:
         python-version: [ "3.9" ]
@@ -40,7 +40,7 @@ jobs:
       - name: Upload pyinstaller exe
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-server-macos
+          name: phonologic-viewer-server-macos-11
           path: dist/phonologic-viewer.exe
       - uses: actions/setup-node@v3
         with:
@@ -53,5 +53,5 @@ jobs:
       - name: Upload electron file
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-electron-macos
+          name: phonologic-viewer-electron-macos-11
           path: out
