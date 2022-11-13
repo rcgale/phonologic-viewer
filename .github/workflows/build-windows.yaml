@@ -47,8 +47,11 @@ jobs:
 
       - run: npm run package
 
+      - name: Pack app
+        run: tar -acf phonologic-viewer-electron-windows.zip out
+
       - name: Upload electron file
         uses: actions/upload-artifact@v3
         with:
           name: phonologic-viewer-electron-windows
-          path: out
+          path: phonologic-viewer-electron-windows.zip
