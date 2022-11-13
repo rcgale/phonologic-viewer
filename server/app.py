@@ -13,6 +13,8 @@ from flask import Flask, send_from_directory, jsonify, request
 from phonologic import logger
 from phonologic.analysis import ComparisonFile
 
+os.environ["PYTHONUTF8"] = "1"
+
 SRC_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
 STATIC_DIRECTORY = os.path.join(SRC_DIRECTORY, "web")
 
