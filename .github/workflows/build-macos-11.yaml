@@ -25,6 +25,13 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
 
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: 'npm'
+      - run: npm install
+      - run: npm run build-all
+
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
@@ -36,14 +43,8 @@ jobs:
           pip install -r requirements.txt
       - name: Build server
         run: |
-          python -m PyInstaller -y server/app.macos.spec
+          python -m PyInstaller -y server/app.spec
 
-      - uses: actions/setup-node@v3
-        with:
-          node-version: '16'
-          cache: 'npm'
-      - run: npm install
-      - run: npm run build-all
       - run: npm run make
 
       - name: Upload electron file

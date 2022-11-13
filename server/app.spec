@@ -9,20 +9,20 @@ phono_systems_dir = os.path.dirname(phonologic.systems.__file__)
 
 APP_NAME = "phonologic-viewer"
 DATA_DIRS = [
-    # "web",
-    # "typescript-app/dist",
-    phono_systems_dir
+    (phono_systems_dir, "phonologic/systems"),
+    (os.path.abspath("web"), "web"),
 ]
 
 block_cipher = None
 
-datas = [
-    (os.path.join(phono_systems_dir, "*"), "phonologic/systems"),
-]
-for data_dir in DATA_DIRS:
+datas = []
+for data_dir, dest_dir in DATA_DIRS:
     for root, dirs, files in os.walk(data_dir):
+        rel_root = root.replace(data_dir.rstrip("/"), "").strip("/")
+        dest_subdir = os.path.join(dest_dir, rel_root).lstrip("/")
         for name in files:
-            datas.append((os.path.join(root, name), root))
+            datas.append((os.path.join(root, name), dest_subdir))
+            print((os.path.join(root, name), dest_subdir))
 
 a = Analysis(
     ['app.py'],
@@ -37,7 +37,7 @@ a = Analysis(
     win_no_prefer_redirects=False,
     win_private_assemblies=False,
     cipher=block_cipher,
-    noarchive=True,
+    noarchive=False,
 )
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
 

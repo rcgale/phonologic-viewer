@@ -14,7 +14,7 @@ from phonologic import logger
 from phonologic.analysis import ComparisonFile
 
 SRC_DIRECTORY = os.path.dirname(os.path.abspath(__file__))
-STATIC_DIRECTORY = os.path.join(SRC_DIRECTORY, "../web")
+STATIC_DIRECTORY = os.path.join(SRC_DIRECTORY, "web")
 
 
 def get_args():
