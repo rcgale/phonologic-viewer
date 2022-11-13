@@ -31,6 +31,7 @@ def create_app(static_directory=STATIC_DIRECTORY):
     app = Flask(__name__, instance_relative_config=True, static_folder=static_directory)
     app.config['MAX_CONTENT_LENGTH'] = 256 * 1024 * 1024
     app.url_map.strict_slashes = False
+    app.json.ensure_ascii = False
 
     @app.route('/api/transcripts', methods=["POST"])
     def transcripts():
