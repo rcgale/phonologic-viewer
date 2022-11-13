@@ -1,5 +1,5 @@
 name: build-windows
-run-name: ${{ github.actor }} is building for windows
+run-name: Windows build
 on: [push]
 jobs:
   build-windows-version:
@@ -37,11 +37,7 @@ jobs:
       - name: Build server
         run: |
           python -m PyInstaller -y server/app.windows.spec
-      - name: Upload pyinstaller exe
-        uses: actions/upload-artifact@v3
-        with:
-          name: phonologic-viewer-server-windows
-          path: dist/phonologic-viewer.exe
+
       - uses: actions/setup-node@v3
         with:
           node-version: '16'

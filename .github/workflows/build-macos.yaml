@@ -1,5 +1,5 @@
-name: build-mac
-run-name: MacOS build (${{ github.actor }})
+name: build-macos-10-15
+run-name: MacOS 10.15 build
 on: [push]
 jobs:
   build-mac-version:
@@ -19,7 +19,7 @@ jobs:
           path: |
             build
             dist
-          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('server/**') }}
+          key: ${{ runner.os }}-10-15-build-${{ env.cache-name }}-${{ hashFiles('server/**') }}
           restore-keys: |
             ${{ runner.os }}-build-${{ env.cache-name }}-
             ${{ runner.os }}-build-
@@ -37,11 +37,7 @@ jobs:
       - name: Build server
         run: |
           python -m PyInstaller -y server/app.macos.spec
-      - name: Upload pyinstaller exe
-        uses: actions/upload-artifact@v3
-        with:
-          name: phonologic-viewer-server-macos
-          path: dist/phonologic-viewer.exe
+
       - uses: actions/setup-node@v3
         with:
           node-version: '16'
@@ -53,5 +49,5 @@ jobs:
       - name: Upload electron file
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-electron-macos
+          name: phonologic-viewer-electron-macos-10-15
           path: out
