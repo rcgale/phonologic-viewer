@@ -1,3 +1,3 @@
-phonologic>=0.3.0,<1.0.0
+phonologic>=0.3.1,<1.0.0
 pyinstaller>=5.4.1,<5.5.0
 flask>=2.2.2,<2.3.0
