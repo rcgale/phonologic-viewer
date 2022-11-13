@@ -2,7 +2,7 @@ name: build-windows
 run-name: ${{ github.actor }} is building for windows
 on: [push]
 jobs:
-  check-bats-version:
+  build-windows-version:
     runs-on: windows-2019
     strategy:
       matrix:
