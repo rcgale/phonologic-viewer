@@ -53,5 +53,5 @@ jobs:
       - name: Upload electron file
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-electron
+          name: phonologic-viewer-electron-windows
           path: out

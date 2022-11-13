@@ -1,8 +1,8 @@
-name: build-windows
-run-name: ${{ github.actor }} is building for windows
+name: build-mac
+run-name: MacOS build (${{ github.actor }})
 on: [push]
 jobs:
-  build-windows-version:
+  build-mac-version:
     runs-on: macos-10.15
     strategy:
       matrix:
@@ -40,7 +40,7 @@ jobs:
       - name: Upload pyinstaller exe
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-server-windows
+          name: phonologic-viewer-server-macos
           path: dist/phonologic-viewer.exe
       - uses: actions/setup-node@v3
         with:
@@ -53,5 +53,5 @@ jobs:
       - name: Upload electron file
         uses: actions/upload-artifact@v3
         with:
-          name: phonologic-viewer-electron
+          name: phonologic-viewer-electron-macos
           path: out
