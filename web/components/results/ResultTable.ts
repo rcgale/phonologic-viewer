@@ -6,24 +6,10 @@ import ResultTableRowError from "./ResultTableRowError.js";
 
 export default defineComponent({
     components: {AlignedSteps, ResultTableRow, ResultTableRowError},
-    props: ["analyses", "alphabet", "labelLeft", "labelRight"],
-    data() {
-        return {
-            loading: false,
-            selectedId: null,
-        }
-    },
-    methods: {
-        select(selectedId: string) {
-            // @ts-ignore
-            this.selectedId = selectedId;
-            // @ts-ignore
-            this.$emit('show', selectedId);
-        },
-    },
+    props: ["selectedId", "analyses", "alphabet", "labelLeft", "labelRight", "loading"],
+    emits: ["show"],
     template: `
-    <div>
-        <table v-if="analyses" id="result-table">
+        <table v-if="analyses && analyses.length" id="result-table">
             <thead>
                 <tr class="header-extra">
                     <th class="column-utterance-id">&nbsp;</th>
@@ -50,13 +36,17 @@ export default defineComponent({
                 <ResultTableRow 
                     v-for="analysis in analyses"
                     :class="{highlight: selectedId === analysis.id}"
-                    @select="() => select(analysis.id)"
+                    @select="() => $emit('show', analysis.id)"
                     :key="analysis"
                     :analysis="analysis"
                     :alphabet="alphabet"
-                    :label-left="labelLeft"
-                    :label-right="labelRight"/>
+                    :label-left="analysis.transcriptPair[0]"
+                    :label-right="analysis.transcriptPair[1]" />
             </tbody>
         </table>
-    </div>`
+        <div v-if="loading" class="loading-container">
+            <div class="loader">&nbsp;</div>
+            Analyzing...
+        </div>
+    `
 })

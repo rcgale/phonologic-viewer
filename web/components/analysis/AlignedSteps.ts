@@ -12,7 +12,7 @@ export default defineComponent({
                 <label>{{labelLeft}}</label>
                 <span v-for="step, n in steps"
                       class="step-expected"
-                      :class="{ highlight: detailHoverIndex == n, 'step-error': step.cost > 0}">
+                      :class="{ highlight: detailHoverIndex === n, 'step-error': step.cost > 0}">
                     <TranscriptFormatted :transcript="step.expected" :alphabet="alphabet" />
                 </span>
             </div>
@@ -20,7 +20,7 @@ export default defineComponent({
                 <label>{{labelRight}}</label>
                 <span v-for="step, n in steps"
                       class="step-actual"
-                      :class="{ highlight: detailHoverIndex == n, 'step-error': step.cost > 0}">
+                      :class="{ highlight: detailHoverIndex === n, 'step-error': step.cost > 0}">
                         <TranscriptFormatted :transcript="step.actual" :alphabet="alphabet" />
                 </span>
             </div>

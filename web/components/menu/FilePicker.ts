@@ -2,7 +2,6 @@
 import {defineComponent} from "../../_vue/vue.esm-browser.js";
 
 export default defineComponent({
-    props: ['modelValue'],
     emits: ['update:modelValue', 'upload'],
     data() {
         return {
@@ -16,9 +15,6 @@ export default defineComponent({
             this.loading = true;
             // @ts-ignore
             const file: File = this.$refs[this.ref].files[0];
-
-            // @ts-ignore
-            this.$emit('update:modelValue', file);
             // @ts-ignore
             this.$emit('upload', file);
             // @ts-ignore

@@ -1,9 +1,9 @@
 // @ts-ignore
 import {defineComponent} from "../../_vue/vue.esm-browser.js";
-import AudioPlayer from "./AudioPlayer.js";
+import AlignedSteps from "../analysis/AlignedSteps.js";
 
 export default defineComponent({
-    components: {AudioPlayer},
+    components: { AlignedSteps },
     props: ["analysis", "detailHoverIndex", "alphabet"],
     template: `
     <div id="item" v-if="analysis">

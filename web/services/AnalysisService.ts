@@ -24,6 +24,7 @@ export interface AnalysisDetails {
 
 export interface Analysis {
     id: string
+    transcriptPair: TranscriptPair
     features: AnalysisDetails
     phonemes: AnalysisDetails
     expected: string
@@ -36,7 +37,6 @@ export interface Analysis {
 
 export interface AnalysisException extends Analysis {
     id: string
-    transcriptPair: TranscriptPair
     message: string
 }
 
@@ -128,16 +128,17 @@ export class AnalysisService {
                 return r.json();
             }
         ).then(
-            r => AnalysisService.adaptAnalysis(transcriptPair.id, r)
+            r => AnalysisService.adaptAnalysis(transcriptPair.id, r, transcriptPair)
         );
     }
 
-    private static adaptAnalysis(id: string, response: any): Analysis|AnalysisException {
+    private static adaptAnalysis(id: string, response: any, transcripts: TranscriptPair): Analysis|AnalysisException {
         let a = response.analysis;
         let fer = a.features.distance / a.features.expected_length;
         let per = a.phonemes.distance / a.phonemes.expected_length;
         return {
             id: id,
+            transcriptPair: transcripts,
             features: {
                 distance: a.features.distance,
                 expectedLength: a.features.expected_length,

@@ -7,6 +7,7 @@ import {AnalysisStep} from "../../services/AnalysisService.js";
 export default defineComponent({
     props: ["selectedId", "analysis", "detailHoverIndex", "alphabet"],
     components: { Features, TranscriptFormatted, },
+    emits: ["updateHoverIndex"],
     data() {
         return {
             steps: [] as AnalysisStep[],
@@ -25,6 +26,7 @@ export default defineComponent({
         this.steps = this.analysis.features.steps;
     },
     template: `
+        <div id="detail" v-show="selectedId">
             <table class="feature-steps">
                 <thead>
                     <th>Action</th>
@@ -35,8 +37,8 @@ export default defineComponent({
                 </thead>
                 <tbody>
                     <tr v-for="step, n in steps"
-                        @mouseover="detailHoverIndex = n"
-                        @mouseleave="detailHoverIndex = null"
+                        @mouseover="$emit('updateHoverIndex', n)"
+                        @mouseleave="$emit('updateHoverIndex', null)"
                         :class="['action-' + step.action.toLowerCase()]"
                     >
                     <td>{{step.action}}</td>
@@ -62,5 +64,5 @@ export default defineComponent({
 
                 </tbody>
             </table>
-        `
+        </div>`
 })
