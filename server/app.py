@@ -38,13 +38,18 @@ def create_app(static_directory=STATIC_DIRECTORY):
         try:
             filename = request.json["filename"]
             content = StringIO(request.json["content"])
+
+            content_errors = file_content_errors(content.getvalue())
+            if content_errors:
+                return jsonify({"message": f"{content_errors}"}), 400
+
             setattr(content, "name", filename)
             logger.info(f"Analyzing file {filename}")
             comparison_file = ComparisonFile.load(content)
             return jsonify(comparison_file)
         except Exception as e:
             traceback.print_exc()
-            return jsonify({"message": f"{type(e).__name__}: {e}"}), 400
+            return jsonify({"message": f"Error processing file. {type(e).__name__}: {e}"}), 400
 
     @app.route('/api/analyses/<system_name>/<left>/<right>/')
     @app.route('/api/analyses/<left>/<right>/')
@@ -76,6 +81,25 @@ def create_app(static_directory=STATIC_DIRECTORY):
 @lru_cache()
 def get_system(system_name):
     return phonologic.load(system_name)
+
+
+def file_content_errors(content: str):
+    header, *rows = content.splitlines(keepends=False)
+    sep = "\t" if "\t" in header else ","
+    columns = header.split(sep)
+    if len(columns) < len(set(columns)):
+        return "Header has duplicate column names!"
+    ids = set()
+    for row in rows:
+        if not row.strip():
+            continue
+        values = row.split(sep)
+        if len(values) < 3:
+            return f"Need at least three columns in row: {row}"
+        id, *rest = row
+        if not id or id in ids:
+            return f"Invalid or repeat utterance id: `{id}`"
+    return None
 
 
 def json_handler(o):

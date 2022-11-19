@@ -1,3 +1,5 @@
+import {ApiHelper} from "./ApiHelper.js";
+
 export interface TranscriptPair {
     id: string
     transcripts: [string, string]
@@ -15,14 +17,14 @@ export class TranscriptService {
             filename: file.name,
             content: await file.text(),
         }
-        return await fetch("/api/transcripts/", {
+        return await ApiHelper.fetch("/api/transcripts/", {
             method: "POST",
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(requestBody)
-        }).then((r) => r.json()).then(data => {
+        }).then(data => {
             let index = Object.keys(data.rows);
             return {
                 filename: data.filename,

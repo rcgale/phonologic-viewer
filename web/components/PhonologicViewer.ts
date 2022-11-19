@@ -19,6 +19,7 @@ export default defineComponent({
             overallPer: null,
             alphabet: "ipa",
             loading: false,
+            errorMessage: null,
         }
     },
     computed: {
@@ -38,15 +39,23 @@ export default defineComponent({
     },
     methods: {
         async receivedFile(file: File) {
-            // @ts-ignore
-            this.loading = true;
-            let parsedFile = await TranscriptService.getTranscripts(file);
-            // @ts-ignore
-            this.analyses = [];
-            // @ts-ignore
-            this.analyses = await AnalysisService.getAll(parsedFile.rows);
-            // @ts-ignore
-            this.loading = false;
+            try {
+                // @ts-ignore
+                this.errorMessage = null;
+                // @ts-ignore
+                this.loading = true;
+                let parsedFile = await TranscriptService.getTranscripts(file);
+                // @ts-ignore
+                this.analyses = [];
+                // @ts-ignore
+                this.analyses = await AnalysisService.getAll(parsedFile.rows);
+                // @ts-ignore
+                this.loading = false;
+            }
+            catch (e) {
+                // @ts-ignore
+                this.errorMessage = e.message || "Unknown error";
+            }
         }
     },
     template: `
@@ -57,13 +66,15 @@ export default defineComponent({
               @upload="receivedFile"
               @setAlphabet="a => alphabet = a" />
         <div id="main-pane-wrapper" class="main-pane">
+            <div class="error-message">{{errorMessage}}</div>
             <ResultTable
+                v-if="!errorMessage && analyses && analyses.length"
                 :key="analyses"
                 :loading="loading"
                 @show="id => selectedId = id"
                 :analyses="analyses"
                 :alphabet="alphabet"
-                />
+            />
         </div>
     </div>
     <SelectedModal 

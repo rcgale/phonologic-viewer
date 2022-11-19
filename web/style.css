@@ -7,6 +7,10 @@
             font-family: Helvetica, Arial, sans-serif;
             margin: 0;
         }
+        .error-message {
+            color: red;
+            font-weight: bold;
+        }
         .align-right {
             text-align: right;
         }

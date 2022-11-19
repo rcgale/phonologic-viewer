@@ -1,4 +1,5 @@
-import {TranscriptPair} from "./TranscriptService";
+import {TranscriptPair} from "./TranscriptService.js";
+import {ApiHelper} from "./ApiHelper.js";
 
 export interface AnalysisDelta {
     left: string
@@ -117,16 +118,9 @@ export class AnalysisService {
 
     private static async getAnalysis(transcriptPair: TranscriptPair): Promise<Analysis> {
         let [leftTranscript, rightTranscript] = transcriptPair.transcripts;
-        return await fetch(
+        return await ApiHelper.fetch(
             `/api/analyses/${leftTranscript}/${rightTranscript}/`,
             { cache: "force-cache" }
-        ).then(
-            r => {
-                if (!r.ok) {
-                    return r.json().then(e => { throw Error(e.message)})
-                }
-                return r.json();
-            }
         ).then(
             r => AnalysisService.adaptAnalysis(transcriptPair.id, r, transcriptPair)
         );

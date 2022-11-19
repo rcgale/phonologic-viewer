@@ -11,6 +11,11 @@ export default defineComponent({
             "alphabet": "ipa",
         }
     },
+    methods: {
+        reload() {
+            window.location.reload();
+        }
+    },
     template: `
         <div id="top-pane" class="main-pane">
              <div v-if="analyses && analyses.length" id="error-summary">
@@ -35,6 +40,9 @@ export default defineComponent({
             <div id="menu">
                 <div class="menu-item" id="file-picker">
                     <FilePicker @upload="file => $emit('upload', file)"></FilePicker>
+                </div>
+                <div class="menu-item" id="reload-button">
+                    <button @click="reload()">Reset</button>
                 </div>
                 <div v-if="analyses && analyses.length" class="menu-item" id="alphabet-picker">
                     <div>Alphabet</div>
