@@ -27,7 +27,12 @@ class Main {
   }
 
   private willQuit = () => {
-    this.server.stop()
+    try {
+      this.server.stop();
+    }
+    catch {
+      return;
+    }
   }
 
   private windowAllClosed = () => {
