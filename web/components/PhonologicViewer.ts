@@ -73,8 +73,7 @@ export default defineComponent({
                 @useDemoFile="receivedFile"
             />
             <ResultTable
-                v-if="!errorMessage && analyses && analyses.length"
-                :key="analyses"
+                v-if="!errorMessage"
                 :loading="loading"
                 @show="id => selectedId = id"
                 :analyses="analyses"
