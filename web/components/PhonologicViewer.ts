@@ -1,13 +1,14 @@
 // @ts-ignore
 import {defineComponent} from "../_vue/vue.esm-browser.js";
 import Menu from "./menu/Menu.js";
+import Welcome from "./Welcome.js";
 import ResultTable from "./results/ResultTable.js";
 import {Analysis, AnalysisCollection, AnalysisService} from "../services/AnalysisService.js";
 import TranscriptService from "../services/TranscriptService.js";
 import SelectedModal from "./details/SelectedModal.js";
 
 export default defineComponent({
-    components: { Menu, ResultTable, SelectedModal },
+    components: { Menu, Welcome, ResultTable, SelectedModal },
     data() {
         return {
             splits: [],
@@ -67,6 +68,10 @@ export default defineComponent({
               @setAlphabet="a => alphabet = a" />
         <div id="main-pane-wrapper" class="main-pane">
             <div class="error-message">{{errorMessage}}</div>
+            <Welcome
+                v-if="!loading && !errorMessage && (!analyses || !analyses.length)"
+                @useDemoFile="receivedFile"
+            />
             <ResultTable
                 v-if="!errorMessage && analyses && analyses.length"
                 :key="analyses"

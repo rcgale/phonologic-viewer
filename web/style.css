@@ -287,3 +287,23 @@
             height: 16px;
             width: 16px;
         }
+
+        table#example-spreadsheet {
+            margin: 0 auto;
+            border: 1px solid black;
+        }
+        table#example-spreadsheet th, table#example-spreadsheet td {
+            border: 1px solid darkgray;
+            width: 12rem;
+            padding: 0.25rem;
+        }
+        .button-as-link {
+            background: none!important;
+            padding: 0!important;
+            border: none;
+            font-family: inherit;
+            font-size: inherit;
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
